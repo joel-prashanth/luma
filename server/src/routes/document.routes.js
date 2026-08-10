@@ -1,14 +1,23 @@
-const express = require("express");
+import express from "express";
 
-const {
+import {
   getDocuments,
   createDocument,
-} = require("../controllers/document.controller");
+  getDocumentById,
+  updateDocumentById,
+  deleteDocument,
+  uploadDocument,
+} from "../controllers/document.controller.js";
 
 const router = express.Router();
 
+import upload from "../middleware/upload.js";
+
 router.get("/", getDocuments);
-
 router.post("/", createDocument);
+router.post("/upload", upload.single("file"), uploadDocument);
+router.get("/:id", getDocumentById);
+router.patch("/:id", updateDocumentById);
+router.delete("/:id", deleteDocument);
 
-module.exports = router;
+export default router;
